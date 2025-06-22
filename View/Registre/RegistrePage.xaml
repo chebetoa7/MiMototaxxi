@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiMototaxxi.View.Registre.RegistrePage"
+             Title="RegistrePage"
+             BackgroundColor="#E7E8E3"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <Grid RowDefinitions="5.0*,5.0*"
+          VerticalOptions="Fill"
+          BackgroundColor="Transparent">
+        <!--#region MiRegistrato-->
+        <Grid RowDefinitions="10.0*,90.0*"
+              VerticalOptions="Fill"
+              x:Name="stkRegistroUsuario"
+              Grid.Row="0"
+              IsVisible="{Binding IsVisibleRegistroUsuario}"
+              Grid.RowSpan="2"
+              BackgroundColor="Transparent">
+            <Grid Grid.Row="0"
+                  VerticalOptions="Fill"
+                  BackgroundColor="Transparent"
+                  ColumnDefinitions="2.0*,8.0*">
+                <Image Grid.Column="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Source="img_back_s.png"
+                       BackgroundColor="Transparent"/>
+                <VerticalStackLayout Grid.Column="1"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center"
+                                     Margin="0,0,0,0">
+                    <Label Text="REGISTRATE"
+                           FontSize="25"
+                           FontAttributes="Bold"
+                           Margin="20,0,0,0"
+                           VerticalTextAlignment="Center"
+                           />
+                </VerticalStackLayout>
+            </Grid>
+            <VerticalStackLayout Grid.Row="1"
+                                 BackgroundColor="Transparent"
+                                 VerticalOptions="Fill">
+
+                <Label Text="Nombre/s"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="50"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Keyboard="Text"
+                           Text="{Binding Name}"
+                           Placeholder="Ingrese nombre"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           TextColor="#AEAEAE"
+                           Margin="20,0,20,0"/>
+                </Border>
+
+                <Label Text="Apellido/s"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="50"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="Ingrese Apellidos"
+                           Text="{Binding LastName}"
+                               Keyboard="Text"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,20,0"/>
+                </Border>
+
+                <Label Text="Número telefónico"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="50"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="0000000000"
+                           Text="{Binding Phone}"
+                               Keyboard="Numeric"
+                           MaxLength="10"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,20,0"/>
+                </Border>
+
+                <Label Text="Correo electrónico"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="50"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="Ingresa correo"
+                               Keyboard="Text"
+                           Text="{Binding Email}"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,20,0"/>
+                </Border>
+
+                <Label Text="CP"
+                           FontSize="15"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="50"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="Ingresa código postal"
+                               Keyboard="Numeric"
+                           Text="{Binding Cp}"
+                               VerticalOptions="Center"
+                               FontSize="14"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,20,0"/>
+                </Border>
+
+                <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="Transparent"
+                            Stroke="Transparent"
+                            >
+                    <HorizontalStackLayout HorizontalOptions="Center">
+                        <Label Text="Ingrese Edad"
+                            FontSize="15"
+                            TextColor="#4D4D4D"
+                            FontAttributes="Bold"
+                            Margin="20,0,0,0"
+                            VerticalOptions="Center"/>
+                        <Picker Title="Tú edad"
+                                ItemsSource="{Binding Ages}"
+                                SelectedItem="{Binding SelectedAge, Mode=TwoWay}"
+                                x:Name="AgePicker"
+                                WidthRequest="100"
+                                HorizontalTextAlignment="Center"
+                                HorizontalOptions="Center"
+                                Margin="10,-4,0,0"
+                                TextColor="#646464"
+                                FontSize="14"
+                                BackgroundColor="Transparent" />
+                    </HorizontalStackLayout>
+
+                </Border>
+
+
+                <Button Text="REGISTRAR"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        WidthRequest="222"
+                         Command="{Binding RegistrarUsuarioCommand}"
+                        CornerRadius="20"
+                        Margin="0,20,0,0"
+                        BackgroundColor="#0AC89A"/>
+
+
+
+
+            </VerticalStackLayout>
+        </Grid>
+        <!--#endregion-->
+            <!--#region Numero de validación  IsVisible="{Binding IsVisible}"-->
+        <Grid ZIndex="100"
+                x:Name="stkValidaCodigoUser"
+                VerticalOptions="Fill"
+                Grid.Row="0"
+                IsVisible="{Binding IsVisible}"
+                Grid.RowSpan="2"
+                BackgroundColor="#60606060">
+            <Border 
+                    HeightRequest="660"
+                    VerticalOptions="Center"
+                    BackgroundColor="White"
+                    Margin="40,0,40,40"
+                    StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout>
+                    <Label Text="Crea Contraseña y ingresa codigo de activacion SMS"
+                            FontSize="25"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center"
+                            Margin="0,20,0,0"/>
+                        <Entry Placeholder="Ingresa código SMS"
+                           Text="{Binding CodigoActiva}"
+                            Margin="20,40,20,0"
+                            FontSize="30"
+                            FontAttributes="Bold"
+                            Keyboard="Numeric"/>
+                        <Entry Placeholder="Contraseña"
+                           Text="{Binding Password1}"
+                            Margin="20,40,20,0"
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            Keyboard="Text"/>
+                        <Entry Placeholder="Repita la contraseña"
+                           Text="{Binding Password2}"
+                            Margin="20,40,20,0"
+                            FontSize="15"
+                            FontAttributes="Bold"
+                            Keyboard="Text"/>
+                        <VerticalStackLayout IsVisible="{Binding IsVisibleloading}">
+                            <ActivityIndicator IsVisible="True"
+                                                IsRunning="False"
+                                                Margin="0,40,0,0"
+                                                HorizontalOptions="Center"
+                                                HeightRequest="150"
+                                                WidthRequest="200"/>
+                            <Label Text=" ...!"
+                                    HorizontalOptions="Center"
+                                    FontSize="25"
+                                    FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    <Button Text="Validar"
+                            IsEnabled="{Binding IsVisibleButton}"
+                            Command="{Binding ValidaUsuarioCommand}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            WidthRequest="150"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"></Button>
+                    <Button Text="Soporte"
+                            IsEnabled="{Binding IsVisibleButton}"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            WidthRequest="150"
+                            HeightRequest="50"
+                            BackgroundColor="Red"
+                            Margin="0,30,0,0"
+                            HorizontalOptions="Center"></Button>
+                    <Label Text="Si no puedes validar comunicate a soporte: 9612471081"
+                            HorizontalOptions="Center" 
+                            HorizontalTextAlignment="Center"
+                            Margin="20,20,20,0"
+                            VerticalTextAlignment="Center"
+                            FontSize="15"
+                            FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+            <!--#endregion-->
+            <!--#region RegistroMoto-->
+            <Grid RowDefinitions="10.0*,90.0*"
+              VerticalOptions="Fill"
+              Grid.Row="0"
+              IsVisible="{Binding IsVisibleRegistreMoto}"
+              Grid.RowSpan="2"
+              BackgroundColor="Transparent">
+                <Grid Grid.Row="0"
+                  VerticalOptions="Fill"
+                  BackgroundColor="Transparent"
+                  ColumnDefinitions="2.5*,7.5*">
+                    <Image Grid.Column="0"
+                       HeightRequest="44"
+                       Source="img_back_s.png"/>
+                    <VerticalStackLayout Grid.Column="1"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center"
+                                     Margin="-10,0,0,0">
+                        <Label Text="AGREGA MOTO"
+                           FontSize="25"
+                           FontAttributes="Bold"
+                           Margin="60,0,0,0"
+                           VerticalOptions="Center"
+                           />
+                    </VerticalStackLayout>
+                </Grid>
+                <VerticalStackLayout Grid.Row="1"
+                                 BackgroundColor="Transparent"
+                                 VerticalOptions="Fill">
+
+                    <Label Text="Marca"
+                           FontSize="18"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                    <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                        <Entry Keyboard="Text"
+                               Text="{Binding Marca}"
+                           Placeholder="Ingrese marca"
+                           VerticalOptions="Center"
+                           FontSize="18"
+                           TextColor="#AEAEAE"
+                           Margin="20,0,0,0"/>
+                    </Border>
+
+                    <Label Text="Modelo"
+                           FontSize="18"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                    <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                        <Entry Placeholder="Ingrese modelo"
+                               Keyboard="Text"
+                               Text="{Binding Modelo}"
+                               VerticalOptions="Center"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,0,0"/>
+                    </Border>
+
+                    <Label Text="Año"
+                           FontSize="18"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                    <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                        <Entry Placeholder="año de la moto"
+                               Keyboard="Numeric"
+                               Text="{Binding Age}"
+                               VerticalOptions="Center"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,0,0"/>
+                    </Border>
+
+                    <Label Text="Color"
+                           FontSize="18"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                    <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                        <Entry Placeholder="Ingresa color"
+                               Keyboard="Text"
+                               Text="{Binding Color}"
+                               VerticalOptions="Center"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,0,0"/>
+                    </Border>
+
+                    <Label Text="Describe tu mototaxi"
+                           FontSize="18"
+                           Margin="0,10,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                    <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                        <Entry Placeholder="Caracteristicas de moto"
+                               Keyboard="Text"
+                               Text="{Binding Des}"
+                               VerticalOptions="Center"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,0,0"/>
+                    </Border>
+
+
+                    <Button Text="+ MOTO"
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        WidthRequest="222"
+                        CornerRadius="20"
+                        Margin="0,20,0,0"
+                        Command="{Binding RegistrarMotoCommand}"
+                        BackgroundColor="#0AC89A"/>
+
+                    <VerticalStackLayout IsVisible="{Binding IsVisibleloading}">
+                        <ActivityIndicator IsVisible="True"
+                                                IsRunning="False"
+                                                Margin="0,40,0,0"
+                                                HorizontalOptions="Center"
+                                                HeightRequest="150"
+                                                WidthRequest="200"/>
+                        <Label Text=" ...!"
+                                    HorizontalOptions="Center"
+                                    FontSize="25"
+                                    FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+
+
+
+
+                </VerticalStackLayout>
+            </Grid>
+            <!--#endregion-->
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

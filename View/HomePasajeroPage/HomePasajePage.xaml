@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+             Shell.NavBarHasShadow="False"
+             Shell.NavBarIsVisible="False"
+             x:Class="MiMototaxxi.View.HomePasajeroPage.HomePasajePage"
+             Title="HomePasajePage">
+    <Grid RowDefinitions="3.333*,3.333*,3.333*"
+          ColumnDefinitions="3.333*,3.333*,3.333*">
+        <!-- Mapa de Google -->
+        <maps:Map x:Name="MyMap" Grid.Column="0"
+                  Grid.Row="0"
+                  IsVisible="True"
+                  Grid.ColumnSpan="3"
+                  Grid.RowSpan="3">
+            <maps:Map.Pins>
+                <maps:Pin Position="{Binding UserPin.Position}"
+                          Label="{Binding UserPin.Label}"
+                          Type="{Binding UserPin.Type}"
+                          Icon="{Binding UserPin.Icon}"/>
+                <maps:Pin Position="{Binding UserPinMoto.Position}"
+                          Label="{Binding UserPinMoto.Label}"
+                          Type="{Binding UserPinMoto.Type}"
+                          Icon="{Binding UserPinMoto.Icon}"/>
+            </maps:Map.Pins>
+        </maps:Map>
+        <!--IsVisible="{Binding IsVisibleLoadingViaje}-->
+        <Grid Grid.Row="0" Grid.Column="0" 
+              Grid.ColumnSpan="3" Grid.RowSpan="3"
+               Padding="0,0,0,0"
+              BackgroundColor="#64646464"
+              IsVisible="{Binding IsVisibleLoadingViaje}">
+            <VerticalStackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center">
+                <Border BackgroundColor="#FFF"
+                        StrokeShape="RoundRectangle 10"
+                        HeightRequest="200"
+                        WidthRequest="230">
+                    <VerticalStackLayout>
+                        <Label Text="Asignado mototaxi ..."
+                               Margin="0,20,0,0"
+                               HorizontalTextAlignment="Center"/>
+                        <ActivityIndicator IsRunning="True"
+                                           Margin="0,20,0,20"/>
+                        <Button Text="Cancelar"
+                                Margin="20,0,20,10"/>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="0" 
+              Grid.ColumnSpan="3" Grid.RowSpan="3"
+               Padding="0,0,0,0"
+              VerticalOptions="End"
+              IsVisible="{Binding IsVisibleViaje}"
+              BackgroundColor="Transparent">
+            <Border BackgroundColor="#F0EEE7"
+                    StrokeShape="RoundRectangle 30"
+                   >
+                <VerticalStackLayout>
+                    <Label Text="Solicita viaje"
+                           FontSize="23"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold"
+                           Margin="0,20,0,20"/>
+                    
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Margin="0,0,0,30">
+                        <ImageButton Source="img_viaje_select.png"
+                           HeightRequest="120" Command="{Binding EnviarSolicitudCommand}">
+                            <!--<ImageButton.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding EnviarSolicitudCommand}" />
+                            </ImageButton.GestureRecognizers>-->
+                        </ImageButton>
+                        <Image Source="img_viaje_select_envio.png"
+                            HeightRequest="120">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </HorizontalStackLayout>
+                    
+                </VerticalStackLayout>
+            </Border>   
+        </Grid>
+        
+        
+    </Grid>
+</ContentPage>

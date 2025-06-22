@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "326995843761",
+    "project_id": "apimototaxi",
+    "storage_bucket": "apimototaxi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326995843761:android:d5c40cddc8e7f04ae12090",
+        "android_client_info": {
+          "package_name": "com.companyname.mimototaxxi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU-RBXpOOUltsi4QgyVKyGRF1nqVNu_sE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

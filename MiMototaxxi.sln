@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiMototaxxi", "MiMototaxxi.csproj", "{79F95D82-9AB5-4624-A08B-7C2B4377D13A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F95D82-9AB5-4624-A08B-7C2B4377D13A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6ABAC1D3-A54C-43B5-8225-321F4608167E}
+	EndGlobalSection
+EndGlobal

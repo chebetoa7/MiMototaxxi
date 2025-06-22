@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiMototaxxi.View.Mototaxxi.MotoTaxiLoginPage"
+             Title="Mototaxista"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="5.0*,5.0*"
+          VerticalOptions="Fill"
+          BackgroundColor="Transparent">
+        <!--#region LoginMototaxxi-->
+        <Grid RowDefinitions="10.0*,30.0*,60.0*"
+              VerticalOptions="Fill"
+              Grid.Row="0"
+              IsVisible="True"
+              Grid.RowSpan="2"
+              BackgroundColor="Transparent">
+            <Grid Grid.Row="0"
+                  VerticalOptions="Fill"
+                  BackgroundColor="Transparent"
+                  ColumnDefinitions="2.5*,7.5*">
+                <Image Grid.Column="0"
+                       HeightRequest="44"
+                       Source="img_back_s.png"/>
+                <VerticalStackLayout Grid.Column="1"
+                                     BackgroundColor="Transparent"
+                                     VerticalOptions="Center"
+                                     Margin="-10,0,0,0">
+                    <Label Text="MOTOTAXISTA"
+                           FontSize="25"
+                           FontAttributes="Bold"
+                           Margin="60,0,0,0"
+                           VerticalOptions="Center"
+                           />
+                </VerticalStackLayout>
+            </Grid>
+            <VerticalStackLayout Grid.Row="1"
+                                 BackgroundColor="Transparent"
+                                 VerticalOptions="Fill">
+
+                <Label Text="Número telefónico registrado"
+                           FontSize="18"
+                           Margin="0,30,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,0"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="0000000000"
+                               Keyboard="Numeric"
+                           Text="{Binding Phone}"
+                               VerticalOptions="Center"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,0,0"/>
+                </Border>
+
+                <Label Text="Contraseña"
+                           FontSize="18"
+                           Margin="0,20,0,0"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="#4D4D4D"/>
+                <Border HeightRequest="60"
+                            WidthRequest="300"
+                            Margin="0,10,0,-30"
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 20"
+                            >
+                    <Entry Placeholder="******"
+                               VerticalOptions="Center"
+                               IsPassword="True"
+                               Text="{Binding Pass}"
+                               FontSize="18"
+                               TextColor="#AEAEAE"
+                               Margin="20,0,20,0"/>
+                </Border>
+
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="2"
+                                 BackgroundColor="Transparent"
+                                 VerticalOptions="Fill">
+                <Image Source="btn_ingresar.png"
+                       HeightRequest="90"
+                       Margin="0,30,0,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ValidarCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image Source="btn_registrar_u.png"
+                       HeightRequest="90"
+                       BackgroundColor="Transparent"
+                       Margin="0,20,0,0">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegistroMotoTaxiCommand}"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </VerticalStackLayout>
+        </Grid>
+        
+        <!--#endregion-->
+        <!--#region Loading-->
+        <Grid RowDefinitions="10.0*,30.0*,60.0*"
+              VerticalOptions="Fill"
+              IsVisible="{Binding IsVisible}"
+              Grid.Row="0"
+              Grid.RowSpan="2"
+              BackgroundColor="#60606060">
+            <VerticalStackLayout VerticalOptions="Fill"
+                        HorizontalOptions="Fill"
+                        BackgroundColor="Transparent"
+                        >
+                <Border BackgroundColor="Transparent" 
+                        Stroke="Transparent"
+                        Margin="0,60,0,0"
+                        VerticalOptions="End"
+                         WidthRequest="200"
+                        HorizontalOptions="Fill"
+                     >
+                    <ActivityIndicator IsRunning="True" 
+                                       Margin="0,70,0,0"
+                                       WidthRequest="200"
+                                       HeightRequest="140"/>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+        <!--#endregion-->
+    </Grid>
+</ContentPage>

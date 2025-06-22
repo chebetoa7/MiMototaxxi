@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MiMototaxxi.View.HomeMototaxiPage.HomeMotoPage"
+             xmlns:maps="clr-namespace:Maui.GoogleMaps;assembly=Maui.GoogleMaps"
+             xmlns:maps2="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             Title="Mapa de ubicación"
+             Shell.NavBarHasShadow="False"
+             Shell.NavBarIsVisible="False">
+    <Grid>
+
+        <!--#region Loading IsVisible="{Binding IsVisibleLoading}"-->
+        <Grid 
+              VerticalOptions="Fill"
+              IsVisible="{Binding IsVisibleLoading}"
+              ZIndex="1"
+              Grid.Row="0"
+              Grid.RowSpan="2"
+              BackgroundColor="#60606060">
+            <VerticalStackLayout VerticalOptions="Fill"
+                        HorizontalOptions="Fill"
+                        BackgroundColor="Transparent"
+                        >
+                <Border BackgroundColor="Transparent" 
+                        Stroke="Transparent"
+                        Margin="0,60,0,0"
+                        VerticalOptions="End"
+                         WidthRequest="200"
+                        HorizontalOptions="Fill"
+                     >
+                    <ActivityIndicator IsRunning="True" 
+                                       Margin="0,70,0,0"
+                                       WidthRequest="200"
+                                       HeightRequest="140"/>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+        <!--#endregion-->
+        
+        <!-- Mapa de Google -->
+        <maps:Map x:Name="MyMap"
+            IsVisible="True">
+            <maps:Map.Pins>
+                <maps:Pin Position="{Binding UserPin.Position}"
+                  Label="{Binding UserPin.Label}"
+                  Type="{Binding UserPin.Type}"
+                  Icon="{Binding UserPin.Icon}"/>
+            </maps:Map.Pins>
+        </maps:Map>
+
+        <!--Codigo para identificar-->
+        <StackLayout VerticalOptions="Start" 
+                     HorizontalOptions="Center" 
+                     Margin="10,0,10,30" Spacing="10"
+                     IsVisible="True"
+                     BackgroundColor="Transparent">
+            <Label Text="{Binding Codigo}"
+               FontSize="22"
+                   FontAttributes="Bold"
+               x:Name="lblCodigo"
+               BackgroundColor="#80000000"
+               TextColor="White"
+               Margin="0,0,10,0" 
+               IsVisible="True"/>
+        </StackLayout>
+
+        <!-- Botón para agregar punto fijo para prueba -->
+        <Button Command="{Binding AddFixedPointCommand}"
+                Text="+Pin"
+                IsVisible="False"
+                VerticalOptions="End"
+                HorizontalOptions="Start"
+                Margin="30,0,0,10"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="50"
+                WidthRequest="50"/>
+
+        <!-- Botón para finalizar turno de trabajo -->
+        <Button Clicked="SotpMonitoring_Cliked"
+                Text="Salir"
+                IsVisible="{Binding IsBtnStopJornada}"
+                x:Name="btnFinTurno"
+                FontSize="20"
+                FontAttributes="Bold"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="0,0,30,10"
+                BackgroundColor="#F44336"
+                TextColor="White"
+                CornerRadius="50"
+                WidthRequest="70"
+                HeightRequest="70"/>
+
+        <!--Bonotes para Ir al punto de viaje en GoogleMaps and Waze-->
+        <StackLayout VerticalOptions="End" 
+                     HorizontalOptions="Start" 
+                     Margin="10,0,10,30" Spacing="10"
+                     IsVisible="True"
+                     BackgroundColor="Transparent">
+            <!-- Botón para Google Maps -->
+            <Button Command="{Binding OpenGoogleMapsCommand}"
+            Text="Maps"
+            BackgroundColor="#4285F4"
+            TextColor="White"
+            CornerRadius="50"
+            HeightRequest="60"/>
+
+            <!-- Botón para Waze -->
+            <Button Command="{Binding OpenWazeCommand}"
+            Text="Waze"
+            BackgroundColor="#33CCFF"
+            TextColor="White"
+            CornerRadius="50"
+            HeightRequest="60"/>
+        </StackLayout>
+        
+        <!--IsVisible="{Binding IsSolicitudViaje}"
+        Solicitud de viaje-->
+        <VerticalStackLayout VerticalOptions="Fill" 
+                             HorizontalOptions="Fill"
+                             IsVisible="{Binding IsSolicitudViaje}"
+                             BackgroundColor="#60606060">
+            <Border VerticalOptions="Fill" 
+                         HorizontalOptions="Fill"
+                         Margin="20,150,20,0"
+                    StrokeShape="RoundRectangle 20"
+                         BackgroundColor="White">
+                <VerticalStackLayout Margin="15"
+                                     Spacing="10">
+                    <!--Descripción de viaje-->
+                    <Label Text="Nuevo Viaje"
+                            FontSize="Large"
+                           FontAttributes="Bold"
+                            TextColor="Black"
+                            HorizontalOptions="Start"/>
+                    <HorizontalStackLayout>
+                        <Label Text="Pasajero: "
+                                FontSize="Medium"
+                               FontAttributes="Bold"
+                                TextColor="Black"
+                                HorizontalOptions="Center"/>
+                        <Label Text="Pasaje"
+                                FontSize="Medium"
+                               x:Name="lblPasaje"
+                               FontAttributes="Italic"
+                                TextColor="Black"
+                                HorizontalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Ubicación: "
+                                FontSize="Medium"
+                               FontAttributes="Bold"
+                                TextColor="Black"
+                                HorizontalOptions="Center"/>
+                        <Label Text="ubicación"
+                                FontSize="15"
+                               x:Name="lblUbi"
+                               FontAttributes="Italic"
+                                TextColor="Black"
+                               VerticalOptions="Center"
+                                HorizontalOptions="Center"/>
+                    </HorizontalStackLayout>
+                    <!-- Indicador de distancia -->
+                    <Label Text="{Binding CurrentDistance, StringFormat='Distancia: {0:N0} metros'}"
+                            FontSize="Medium"
+                           x:Name="lblDistance"
+                            TextColor="White"
+                            BackgroundColor="#333333"
+                            Padding="10"
+                            HorizontalOptions="Center"/>
+
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="10">
+                        <!-- Botones de control -->
+                        <Button Command="{Binding StartMonitoringCommand}"
+                                Text="Aceptar"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                WidthRequest="150"
+                                HeightRequest="60"
+                                BackgroundColor="#4CAF50"
+                                TextColor="White"/>
+
+                        <Button Command="{Binding StopMonitoringCommand}"
+                                Text="Rechasar"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                WidthRequest="150"
+                                HeightRequest="60"
+                                BackgroundColor="#F44336"
+                                TextColor="White"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+            </Border>
+        </VerticalStackLayout>
+
+        <!--IsVisible="{Binding IsBtnGoJornada}"
+        Iniciar Jornada de trabajo-->
+        <VerticalStackLayout VerticalOptions="Fill" 
+                             HorizontalOptions="Fill"
+                             IsVisible="{Binding IsBtnGoJornada}"
+                             x:Name="stackIniciaJornada"
+                             BackgroundColor="#60606060">
+            <Border VerticalOptions="Fill" 
+                         HorizontalOptions="Fill"
+                         Margin="20,150,20,0"
+                    Stroke="White"
+                    StrokeShape="RoundRectangle 20"
+                         BackgroundColor="#FF746B"
+                    WidthRequest="237"
+                    HeightRequest="200">
+                <VerticalStackLayout Margin="15"
+                                     Spacing="10">
+                    <Image Source="mi_icono.png"
+                           HeightRequest="100"
+                           WidthRequest="100">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="StartMonitoringTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Text="Empezar a trabajar"
+                           FontSize="20"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           TextColor="White"
+                           FontAttributes="Bold"/>
+                </VerticalStackLayout>
+
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage> 
