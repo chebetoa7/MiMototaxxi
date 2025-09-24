@@ -7,6 +7,15 @@
 			"group": "build",
 			"problemMatcher": [],
 			"label": "dotnet: build"
+		},
+		{
+			"type": "msbuild",
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build",
+			"label": "Build: solution",
+			"detail": "Build the MiMototaxxi.sln solution using dotnet build"
 		}
 	]
 }

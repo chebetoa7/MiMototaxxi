@@ -19,6 +19,14 @@ using Microsoft.Maui.LifecycleEvents;
 using Plugin.Firebase.Core;
 using Plugin.Firebase.CloudMessaging;
 using MiMototaxxi.Services.Moto;
+using MiMototaxxi.Services.Location;
+using MiMototaxxi.ViewModel;
+using MiMototaxxi.Services.LocationTracking;
+using MiMototaxxi.Services.Notification;
+
+
+
+
 
 
 
@@ -54,6 +62,12 @@ public static class MauiProgram
         //Servicios
         builder.Services.AddSingleton<UsuarioService>();
         builder.Services.AddSingleton<MotoService>();
+        builder.Services.AddSingleton<ApiServiceMoto>();
+
+        builder.Services.AddSingleton<IMotoService, MotoService>();
+        builder.Services.AddSingleton<ILocationTrackerService, LocationTrackerService>();
+        builder.Services.AddSingleton<IDestinationMonitorService, DestinationMonitorService>();
+        builder.Services.AddSingleton<INotificationService, NotificationService>();
 
         //ViewModels
         builder.Services.AddTransient<UserSelectionViewModel>();
@@ -63,6 +77,9 @@ public static class MauiProgram
         builder.Services.AddTransient<RegistreMototaxiViewModel>();
         builder.Services.AddTransient<HomeMotoViewModel>();
         builder.Services.AddTransient<HomePasajeViewModel>();
+
+        builder.Services.AddTransient<HomeMotoPageRViewModel>();
+        builder.Services.AddTransient<HomeMotoPageR>();
 
 
         //Views

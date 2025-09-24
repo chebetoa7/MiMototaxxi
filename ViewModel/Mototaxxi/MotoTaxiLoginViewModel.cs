@@ -81,6 +81,8 @@ namespace MiMototaxxi.ViewModel.Mototaxxi
                     IsVisible = false;
                     // Navega a la página de inicio
                     var page = new HomeMotoPage();
+                    //var page = new HomeMotoPageRViewModel();
+                   // var page = new HomeMotoPageR(page);
                     await NavigateAsync(page);
                 }
                 else

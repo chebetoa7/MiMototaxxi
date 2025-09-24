@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,9 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
         private Double _lonDes;
 
         private readonly MotoService _motoService;
+
+        //Interfas api motos 
+        private readonly ApiServiceMoto _apiServiceMoto;
 
         //Movimiento de mototaxista
         private Position _lastRecordedPosition;
@@ -115,6 +119,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
         public HomeMotoViewModel()
         {
             _motoService = new MotoService();
+            _apiServiceMoto = new ApiServiceMoto();
             IsBtnGoJornada = true;
             // Inicializar con valores por defecto
             CurrentPosition = new Position(0, 0);
@@ -318,7 +323,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                              Lat = location.Latitude,
                              Lon = location.Longitude
                          };
-                         var result = await _motoService.updateLocationMotoAsync(lct, idUser ?? "NA");
+                         var result = await _motoService.UpdateLocationAsync(lct, idUser ?? "NA");
                      }
                      else
                      {
@@ -359,12 +364,14 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                     lon = lon,
                     CodigoConfirmacion = "NA",
                 };
-                _= _motoService.AceptaViajeAsync(viajemodel, IdViaje ?? "NA");
+                _= _motoService.AcceptRideAsync(viajemodel, IdViaje ?? "NA");
             }catch(Exception exM) 
             {
                 Console.WriteLine("Error IniciarViaje: " + exM.Message );
             }
         }
+        
+
         private async Task IniciaViaje() 
         {
             try 
@@ -383,7 +390,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                     CodigoConfirmacion = GenerarCodigo6Digitos(),
                 };
                 Codigo = viajemodel.CodigoConfirmacion;
-                await _motoService.AceptaViajeAsync(viajemodel, IdViaje ?? "NA");
+                await _motoService.AcceptRideAsync(viajemodel, IdViaje ?? "NA");
                 IsSolicitudViaje = false;
                 IsVisibleLoading = false;
             }
@@ -456,7 +463,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
             polyline.Positions.Add(puntoInicial);
             polyline.Positions.Add(puntofinal);
         }*/
-        public async Task OpenInWaze(Position destination, string destinationName = "Destino")
+        /*public async Task OpenInWaze(Position destination, string destinationName = "Destino")
         {
             try
             {
@@ -477,9 +484,54 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
             {
                 await Application.Current.MainPage.DisplayAlert("Error", $"No se pudo abrir Waze: {ex.Message}", "OK");
             }
+        }*/
+        public async Task OpenInWaze(Position destination, string destinationName = "Destino")
+        {
+            try
+            {
+                // Forzar formato invariante
+                string destLat = destination.Latitude.ToString(CultureInfo.InvariantCulture);
+                string destLon = destination.Longitude.ToString(CultureInfo.InvariantCulture);
+
+                var uri = new Uri($"waze://?ll={destLat},{destLon}&navigate=yes");
+
+                var canOpen = await Launcher.CanOpenAsync(uri);
+
+                if (!canOpen)
+                {
+                    uri = new Uri($"https://waze.com/ul?ll={destLat},{destLon}&navigate=yes");
+                }
+
+                await Launcher.Default.OpenAsync(uri);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", $"No se pudo abrir Waze: {ex.Message}", "OK");
+            }
         }
 
+
         public async Task OpenInGoogleMaps(Position start, Position end, string destinationName = "Destino")
+        {
+            try
+            {
+                // Usar CultureInfo.InvariantCulture para forzar punto decimal
+                string startLat = start.Latitude.ToString(CultureInfo.InvariantCulture);
+                string startLon = start.Longitude.ToString(CultureInfo.InvariantCulture);
+                string endLat = end.Latitude.ToString(CultureInfo.InvariantCulture);
+                string endLon = end.Longitude.ToString(CultureInfo.InvariantCulture);
+
+                var uri = new Uri($"https://www.google.com/maps/dir/?api=1&origin={startLat},{startLon}&destination={endLat},{endLon}&travelmode=driving&dir_action=navigate");
+
+                await Launcher.Default.OpenAsync(uri);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", $"No se pudo abrir Google Maps: {ex.Message}", "OK");
+            }
+        }
+
+        /*public async Task OpenInGoogleMaps(Position start, Position end, string destinationName = "Destino")
         {
             try
             {
@@ -491,7 +543,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
             {
                 await Application.Current.MainPage.DisplayAlert("Error", $"No se pudo abrir Google Maps: {ex.Message}", "OK");
             }
-        }
+        }*/
 
         //Monitor
         private async Task StartMonitoringPinUp()
@@ -539,7 +591,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                 var tk = Preferences.Get("TokenFCM", string.Empty);
                 var idUser = Preferences.Get("IdUsuario", string.Empty);
                 var lctToken = new Model.Moto.MtoToken { fcmToken = tk };
-                await _motoService.updateMotoAsync(lctToken, idUser ?? "NA");
+                await _apiServiceMoto.UpdateMotoAsync(lctToken, idUser ?? "NA");
             }
             catch(Exception exM) 
             {
@@ -602,7 +654,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                 {
                     Estatus = "Disponible"
                 };
-                _ = _motoService.updateMotoAsync(estatusDto, idUser ?? "NA");
+                _ = _apiServiceMoto.UpdateMotoAsync(estatusDto, idUser ?? "NA");
             }
             catch (Exception exM)
             {
@@ -620,11 +672,11 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                 {
                     Estatus = "SinServicio"
                 };
-                _ = _motoService.updateMotoAsync(estatusDto, idUser ?? "NA");
+                _ = _apiServiceMoto.UpdateMotoAsync(estatusDto, idUser ?? "NA");
             }
             catch (Exception exM)
             {
-                Console.WriteLine("Error Iniciar Jornada: " + exM.Message);
+                Console.WriteLine("Error TerminarJornada: " + exM.Message);
             }
         }
 
@@ -1085,7 +1137,7 @@ namespace MiMototaxxi.ViewModel.HomeMototaxi
                     
                 };
 
-                await _motoService.updateLocationMotoAsync(locationData, idUser ?? "NA");
+                await _motoService.UpdateLocationAsync(locationData, idUser ?? "NA");
                 Debug.WriteLine($"📡 Firebase actualizado | Prec: {location.Accuracy}m");
             }
             catch (Exception ex)

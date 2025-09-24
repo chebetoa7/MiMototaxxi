@@ -3,6 +3,7 @@ using MiMototaxxi.ViewModel.HomeMototaxi;
 using Plugin.Firebase.CloudMessaging;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace MiMototaxxi.View.HomeMototaxiPage
 {
@@ -53,6 +54,20 @@ namespace MiMototaxxi.View.HomeMototaxiPage
                 }
             };
         }
+        private double ParseCoordinate(string coordinateValue)
+        {
+            try
+            {
+                // Normalizar el formato: reemplazar coma por punto
+                string normalizedValue = coordinateValue.Trim().Replace(",", ".");
+                return Double.Parse(normalizedValue, CultureInfo.InvariantCulture);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing coordinate '{coordinateValue}': {ex.Message}");
+                return 0;
+            }
+        }
         Double latDestino = 0f;
         Double lonDestino = 0f;
         public async Task OpenSolicitudViaje(string datoEntrada)
@@ -88,21 +103,58 @@ namespace MiMototaxxi.View.HomeMototaxiPage
                 else if (parte.Contains("Lat:"))
                 {
                     var ltDestino = parte.Replace("Lat:", "").Trim();
+                    double rawLat = ParseCoordinate(ltDestino);
+
+                    if (Math.Abs(rawLat) > 90)
+                    {
+                        latDestino = rawLat / 1000000.0;
+                        Console.WriteLine($"[MICROGRADOS] Latitud convertida: {rawLat} → {latDestino}");
+                    }
+                    else
+                    {
+                        latDestino = rawLat;
+                        Console.WriteLine($"[GRADOS] Latitud: {latDestino}");
+                    }
+                }
+                else if (parte.Contains("Lon:"))
+                {
+                    var loDestino = parte.Replace("Lon:", "").Trim();
+                    double rawLon = ParseCoordinate(loDestino);
+
+                    if (Math.Abs(rawLon) > 180)
+                    {
+                        lonDestino = rawLon / 1000000.0;
+                        Console.WriteLine($"[MICROGRADOS] Longitud convertida: {rawLon} → {lonDestino}");
+                    }
+                    else
+                    {
+                        lonDestino = rawLon;
+                        Console.WriteLine($"[GRADOS] Longitud: {lonDestino}");
+                    }
+                }
+                /*else if (parte.Contains("Lat:"))
+                {
+                    var ltDestino = parte.Replace("Lat:", "").Trim();
                     latDestino = Double.Parse(ltDestino);
                 }
                 else if (parte.Contains("Lon:"))
                 {
                     var loDestino = parte.Replace("Lon:", "").Trim();
                     lonDestino = Double.Parse(loDestino);
-                }
+                }*/
             }
             // Mostrar resultados (puedes usarlos en tu aplicaci�n MAUI)
             Console.WriteLine($"Ubicaci�n: {ubicacion2}");
             Console.WriteLine($"Pasajero: {pasajero2}");
             Console.WriteLine($"Distancia: {distancia}");
             Console.WriteLine($"ID Viaje: {idViaje}");
-            Console.WriteLine($"Lat: {latDestino}");
-            Console.WriteLine($"Lon: {lonDestino}");
+
+
+            Console.WriteLine($"Valor Lat convertido: {latDestino}");
+            Console.WriteLine($"Valor Lon convertido: {lonDestino}");
+
+            /*Console.WriteLine($"Lat: {latDestino}");
+            Console.WriteLine($"Lon: {lonDestino}");*/
             var dk = Double.Parse(distancia.Trim().Replace("km", ""));
             var metrosdistance = ConvertirKilometrosAMetros(dk);
 
